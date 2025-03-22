@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { ChevronRight, Lightbulb, Mic, MusicNote, Sparkles } from 'lucide-react';
+import { ChevronRight, Lightbulb, Mic, Music, Sparkles } from 'lucide-react';
 
 type EventType = 'wedding' | 'anniversary' | 'birthday' | 'proposal' | 'other';
 type Language = 'english' | 'spanish' | 'hindi' | 'french' | 'japanese' | 'other';
@@ -33,8 +32,6 @@ const Questionnaire: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here we would normally handle the form submission
-    // For now we'll just move to the preview page
     setStep(5);
   };
   
@@ -158,7 +155,7 @@ const Questionnaire: React.FC = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {[
                 { type: 'romantic' as MusicStyle, icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>, label: 'Romantic' },
-                { type: 'upbeat' as MusicStyle, icon: <MusicNote className="w-5 h-5" />, label: 'Upbeat' },
+                { type: 'upbeat' as MusicStyle, icon: <Music className="w-5 h-5" />, label: 'Upbeat' },
                 { type: 'classical' as MusicStyle, icon: <Mic className="w-5 h-5" />, label: 'Classical' },
                 { type: 'folk' as MusicStyle, icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>, label: 'Folk' },
                 { type: 'pop' as MusicStyle, icon: <Sparkles className="w-5 h-5" />, label: 'Pop' },
@@ -292,7 +289,7 @@ const Questionnaire: React.FC = () => {
       <div className="max-w-3xl mx-auto px-6 md:px-8 relative z-20">
         <div className="text-center mb-10 slide-in-section">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-secondary text-xs font-medium text-secondary-foreground mb-4">
-            <MusicNote className="w-3.5 h-3.5" />
+            <Music className="w-3.5 h-3.5" />
             <span>Create Your Experience</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Tell Us About Your Vision</h2>
