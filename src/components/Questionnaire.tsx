@@ -54,9 +54,9 @@ const Questionnaire: React.FC = () => {
   };
   
   const canProceed = 
-    (step === 1 && eventType) || 
-    (step === 2 && language) || 
-    (step === 3 && musicStyle) ||
+    (step === 1 && eventType !== null) || 
+    (step === 2 && language !== null) || 
+    (step === 3 && musicStyle !== null) ||
     step === 4;
   
   const renderStepContent = () => {
