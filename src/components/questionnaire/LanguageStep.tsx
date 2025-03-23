@@ -10,12 +10,12 @@ interface LanguageStepProps {
 
 const LanguageStep: React.FC<LanguageStepProps> = ({ selectedLanguage, onSelect }) => {
   const languages = [
-    { type: 'english' as Language, label: 'English' },
-    { type: 'spanish' as Language, label: 'Spanish' },
-    { type: 'hindi' as Language, label: 'Hindi' },
-    { type: 'french' as Language, label: 'French' },
-    { type: 'japanese' as Language, label: 'Japanese' },
-    { type: 'other' as Language, label: 'Other' },
+    { type: 'english' as Language, label: 'English', flag: '🇬🇧', color: 'from-blue-100 to-red-100' },
+    { type: 'spanish' as Language, label: 'Spanish', flag: '🇪🇸', color: 'from-yellow-100 to-red-100' },
+    { type: 'hindi' as Language, label: 'Hindi', flag: '🇮🇳', color: 'from-orange-100 to-green-100' },
+    { type: 'french' as Language, label: 'French', flag: '🇫🇷', color: 'from-blue-100 to-red-100' },
+    { type: 'japanese' as Language, label: 'Japanese', flag: '🇯🇵', color: 'from-red-100 to-white-100' },
+    { type: 'other' as Language, label: 'Other', flag: '🌍', color: 'from-purple-100 to-blue-100' },
   ];
 
   return (
@@ -35,15 +35,11 @@ const LanguageStep: React.FC<LanguageStepProps> = ({ selectedLanguage, onSelect 
                 : "border-border hover:border-primary/20"
             )}
           >
-            <div className="h-12 flex items-center justify-center mb-2">
-              <span className="text-xl">{
-                item.type === 'english' ? '🇬🇧' :
-                item.type === 'spanish' ? '🇪🇸' :
-                item.type === 'hindi' ? '🇮🇳' :
-                item.type === 'french' ? '🇫🇷' :
-                item.type === 'japanese' ? '🇯🇵' :
-                '🌍'
-              }</span>
+            <div className={cn(
+              "h-12 flex items-center justify-center mb-2 rounded-full",
+              `bg-gradient-to-r ${item.color}`
+            )}>
+              <span className="text-3xl">{item.flag}</span>
             </div>
             <p className="font-medium text-center">{item.label}</p>
           </button>

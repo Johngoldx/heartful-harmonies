@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { ChevronRight, Sparkles } from 'lucide-react';
+import { ChevronRight, Sparkles, ArrowLeft } from 'lucide-react';
 
 interface NavigationButtonsProps {
   step: number;
@@ -26,9 +26,10 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
         <button 
           type="button"
           onClick={onPrevious}
-          className="px-6 py-2 rounded-lg border border-border hover:bg-secondary transition-all duration-200"
+          className="px-6 py-2.5 rounded-lg border border-border hover:bg-secondary transition-all duration-200 flex items-center"
         >
-          Back
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          <span>Back</span>
         </button>
       ) : (
         <div></div>
@@ -40,11 +41,11 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
           onClick={onNext}
           disabled={!canProceed}
           className={cn(
-            "flex items-center space-x-2 px-6 py-2 rounded-lg",
+            "flex items-center space-x-2 px-6 py-2.5 rounded-lg",
             "transition-all duration-200",
             !canProceed
               ? "bg-muted text-muted-foreground cursor-not-allowed"
-              : "bg-primary text-primary-foreground hover:bg-primary/90"
+              : "bg-gradient-to-r from-primary to-blue-500 hover:from-primary/90 hover:to-blue-500/90 text-white hover:shadow-md"
           )}
         >
           <span>Continue</span>
@@ -53,7 +54,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
       ) : (
         <button 
           type="submit"
-          className="flex items-center space-x-2 px-6 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200"
+          className="flex items-center space-x-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-primary to-purple-500 text-white hover:from-primary/90 hover:to-purple-500/90 hover:shadow-md transition-all duration-200"
         >
           <span>Create My Music</span>
           <Sparkles className="w-4 h-4" />

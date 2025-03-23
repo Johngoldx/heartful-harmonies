@@ -43,6 +43,15 @@ const Index: React.FC = () => {
           </Button>
         </Link>
       </div>
+
+      {/* Colorful background gradients */}
+      <div className="fixed inset-0 -z-10 bg-background">
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-pink-200/30 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-blue-200/30 rounded-full filter blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/4 w-1/4 h-1/4 bg-purple-200/30 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-1/3 h-1/3 bg-yellow-200/30 rounded-full filter blur-3xl"></div>
+      </div>
+      
       <Hero />
       <Features />
       <MusicPreview />

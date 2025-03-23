@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { Lightbulb } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 interface FinalDetailsStepProps {
   names: string;
@@ -21,30 +23,29 @@ const FinalDetailsStep: React.FC<FinalDetailsStepProps> = ({
       
       <div className="mb-6">
         <label htmlFor="names" className="block text-sm font-medium mb-2">Names (for a personalized touch)</label>
-        <input
-          type="text"
+        <Input
           id="names"
           value={names}
           onChange={(e) => setNames(e.target.value)}
           placeholder="e.g., John and Sarah"
-          className="w-full p-3 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary/30 bg-white/50 transition-all duration-200"
+          className="border-primary/20 focus:border-primary focus:ring-primary/30 transition-all duration-200"
         />
       </div>
       
       <div>
         <label htmlFor="details" className="block text-sm font-medium mb-2">Tell us more about your story or event</label>
-        <textarea
+        <Textarea
           id="details"
           value={additionalDetails}
           onChange={(e) => setAdditionalDetails(e.target.value)}
           placeholder="Share details about your relationship, the event, or any specific elements you'd like included in your music..."
           rows={5}
-          className="w-full p-3 rounded-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary/30 bg-white/50 transition-all duration-200"
+          className="border-primary/20 focus:border-primary focus:ring-primary/30 transition-all duration-200"
         />
       </div>
       
-      <div className="mt-6 p-4 rounded-lg bg-primary/5 border border-primary/20 flex items-start">
-        <Lightbulb className="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+      <div className="mt-6 p-4 rounded-lg bg-gradient-to-r from-primary/10 to-purple-100/30 border border-primary/20 flex items-start">
+        <Lightbulb className="w-5 h-5 text-amber-500 mr-3 mt-0.5 flex-shrink-0" />
         <p className="text-sm">The more details you provide, the better we can personalize your musical experience. Feel free to share your story, important dates, or special memories.</p>
       </div>
     </div>
