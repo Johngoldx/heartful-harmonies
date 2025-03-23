@@ -5,6 +5,9 @@ import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import Questionnaire from '@/components/Questionnaire';
 import MusicPreview from '@/components/MusicPreview';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Languages } from 'lucide-react';
 
 const Index: React.FC = () => {
   useEffect(() => {
@@ -32,6 +35,14 @@ const Index: React.FC = () => {
 
   return (
     <Layout>
+      <div className="fixed bottom-6 right-6 z-50">
+        <Link to="/translator">
+          <Button className="rounded-full shadow-lg flex items-center" size="lg">
+            <Languages className="mr-2 h-5 w-5" />
+            Sign Language Translator
+          </Button>
+        </Link>
+      </div>
       <Hero />
       <Features />
       <MusicPreview />
