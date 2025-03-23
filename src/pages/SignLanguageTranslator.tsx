@@ -1,10 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useToast } from '@/components/ui/use-toast';
+import YouTubePlayer from '@/components/YouTubePlayer';
 import { 
   PlayCircle, Volume2, Settings, Languages, Search, 
   BookOpen, ChevronDown, History, RotateCcw
@@ -13,17 +16,58 @@ import {
 const SignLanguageTranslator: React.FC = () => {
   const [videoUrl, setVideoUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
+  const [transcription, setTranscription] = useState('');
+  const [signLanguage, setSignLanguage] = useState('asl');
+  const [avatarSize, setAvatarSize] = useState('medium');
+  const [animationSpeed, setAnimationSpeed] = useState(1);
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!videoUrl) return;
     
-    // Here we would trigger the video translation process
+    // Process the video URL
     setIsLoading(true);
     console.log('Processing video:', videoUrl);
     
     // Simulate loading for demo purposes
-    setTimeout(() => setIsLoading(false), 2000);
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsVideoLoaded(true);
+      toast({
+        title: "Video loaded",
+        description: "Ready to start speech recognition and translation",
+      });
+    }, 1500);
+  };
+
+  const handleVideoReady = () => {
+    setIsVideoLoaded(true);
+  };
+
+  const startTranscription = () => {
+    if (!isVideoLoaded) return;
+    
+    setIsTranscribing(true);
+    // Simulate transcription process
+    toast({
+      title: "Starting transcription",
+      description: "Analyzing audio from video...",
+    });
+    
+    // In a real app, we would connect to a speech recognition API here
+    setTimeout(() => {
+      const demoTranscription = "Hello! This is a demonstration of what the transcription would look like. In a real application, this text would be generated from the speech in the video.";
+      setTranscription(demoTranscription);
+      setIsTranscribing(false);
+      
+      toast({
+        title: "Transcription complete",
+        description: "Text has been extracted from the video",
+      });
+    }, 3000);
   };
 
   return (
@@ -56,7 +100,11 @@ const SignLanguageTranslator: React.FC = () => {
                       <div className="space-y-4">
                         <div>
                           <h3 className="text-sm font-medium mb-2">Sign Language</h3>
-                          <select className="w-full p-2 rounded-md border">
+                          <select 
+                            className="w-full p-2 rounded-md border"
+                            value={signLanguage}
+                            onChange={(e) => setSignLanguage(e.target.value)}
+                          >
                             <option value="asl">American Sign Language (ASL)</option>
                             <option value="bsl">British Sign Language (BSL)</option>
                             <option value="isl">International Sign Language</option>
@@ -64,23 +112,40 @@ const SignLanguageTranslator: React.FC = () => {
                         </div>
                         
                         <div>
-                          <h3 className="text-sm font-medium mb-2">Animation Speed</h3>
-                          <input 
-                            type="range" 
-                            min="0.5" 
-                            max="2" 
-                            step="0.1" 
-                            defaultValue="1"
-                            className="w-full" 
+                          <h3 className="text-sm font-medium mb-2">Animation Speed ({animationSpeed}x)</h3>
+                          <Slider
+                            min={0.5}
+                            max={2}
+                            step={0.1}
+                            value={[animationSpeed]}
+                            onValueChange={(values) => setAnimationSpeed(values[0])}
                           />
                         </div>
                         
                         <div>
                           <h3 className="text-sm font-medium mb-2">Avatar Size</h3>
                           <div className="flex space-x-2">
-                            <Button variant="outline" size="sm">Small</Button>
-                            <Button variant="default" size="sm">Medium</Button>
-                            <Button variant="outline" size="sm">Large</Button>
+                            <Button 
+                              variant={avatarSize === 'small' ? 'default' : 'outline'} 
+                              size="sm"
+                              onClick={() => setAvatarSize('small')}
+                            >
+                              Small
+                            </Button>
+                            <Button 
+                              variant={avatarSize === 'medium' ? 'default' : 'outline'} 
+                              size="sm"
+                              onClick={() => setAvatarSize('medium')}
+                            >
+                              Medium
+                            </Button>
+                            <Button 
+                              variant={avatarSize === 'large' ? 'default' : 'outline'} 
+                              size="sm"
+                              onClick={() => setAvatarSize('large')}
+                            >
+                              Large
+                            </Button>
                           </div>
                         </div>
                       </div>
@@ -109,7 +174,7 @@ const SignLanguageTranslator: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="flex gap-2">
                     <Input
-                      placeholder="Paste YouTube URL here"
+                      placeholder="Paste YouTube URL here (e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ)"
                       value={videoUrl}
                       onChange={(e) => setVideoUrl(e.target.value)}
                       className="flex-1"
@@ -120,33 +185,94 @@ const SignLanguageTranslator: React.FC = () => {
                       ) : (
                         <PlayCircle className="h-4 w-4 mr-2" />
                       )}
-                      {isLoading ? "Processing..." : "Translate"}
+                      {isLoading ? "Processing..." : "Load Video"}
                     </Button>
                   </div>
                 </form>
                 
-                {/* Video Player with Placeholder */}
-                <div className="mt-6 aspect-video bg-gray-100 dark:bg-gray-800 rounded-md flex items-center justify-center">
-                  {isLoading ? (
-                    <div className="text-center">
-                      <RotateCcw className="h-10 w-10 animate-spin mx-auto mb-4" />
-                      <p>Analyzing video and generating sign language...</p>
-                    </div>
-                  ) : videoUrl ? (
-                    <div className="text-center">
-                      <p>Video player with sign language interpreter will appear here</p>
-                    </div>
-                  ) : (
-                    <div className="text-center p-6">
-                      <Languages className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-                      <h3 className="text-lg font-medium mb-2">Paste a YouTube URL to begin</h3>
-                      <p className="text-muted-foreground max-w-md mx-auto">
-                        Our AI will analyze the video, transcribe the speech, and translate it to your 
-                        preferred sign language in real-time.
-                      </p>
-                    </div>
-                  )}
+                {/* Video Display Section */}
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* YouTube Video Player */}
+                  <div className="aspect-video bg-gray-100 dark:bg-gray-800 rounded-md flex items-center justify-center overflow-hidden">
+                    {isLoading ? (
+                      <div className="text-center">
+                        <RotateCcw className="h-10 w-10 animate-spin mx-auto mb-4" />
+                        <p>Loading video...</p>
+                      </div>
+                    ) : videoUrl && isVideoLoaded ? (
+                      <YouTubePlayer videoUrl={videoUrl} onReady={handleVideoReady} />
+                    ) : (
+                      <div className="text-center p-6">
+                        <Languages className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
+                        <h3 className="text-lg font-medium mb-2">Paste a YouTube URL to begin</h3>
+                        <p className="text-muted-foreground max-w-md mx-auto">
+                          Our AI will analyze the video, transcribe the speech, and translate it to your 
+                          preferred sign language in real-time.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Sign Language Avatar Display */}
+                  <div className={`aspect-video bg-gray-100 dark:bg-gray-800 rounded-md flex flex-col items-center justify-center ${
+                    avatarSize === 'small' ? 'p-8' : avatarSize === 'large' ? 'p-2' : 'p-4'
+                  }`}>
+                    {transcription ? (
+                      <div className="text-center h-full w-full flex flex-col items-center justify-center">
+                        <div className="bg-white dark:bg-gray-700 rounded-full w-40 h-40 mb-4 flex items-center justify-center">
+                          <Languages className="h-20 w-20 text-primary" />
+                        </div>
+                        <p className="text-sm font-medium">Signing at {animationSpeed}x speed</p>
+                        <p className="mt-2 text-xs text-muted-foreground max-w-xs">
+                          In a real app, this would be a 3D avatar performing sign language based on the transcribed text.
+                        </p>
+                      </div>
+                    ) : isVideoLoaded ? (
+                      <div className="text-center">
+                        <Button 
+                          onClick={startTranscription} 
+                          disabled={isTranscribing}
+                          className="mb-4"
+                        >
+                          {isTranscribing ? (
+                            <RotateCcw className="h-4 w-4 animate-spin mr-2" />
+                          ) : (
+                            <Volume2 className="h-4 w-4 mr-2" />
+                          )}
+                          {isTranscribing ? "Transcribing..." : "Start Transcription"}
+                        </Button>
+                        <p className="text-muted-foreground max-w-xs mx-auto">
+                          Click to start transcribing the video and translating to {
+                            signLanguage === 'asl' ? 'American Sign Language' : 
+                            signLanguage === 'bsl' ? 'British Sign Language' : 
+                            'International Sign Language'
+                          }
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="text-center p-6">
+                        <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-24 h-24 mx-auto mb-4 flex items-center justify-center">
+                          <Languages className="h-12 w-12 text-muted-foreground" />
+                        </div>
+                        <h3 className="text-lg font-medium mb-2">Sign Language Avatar</h3>
+                        <p className="text-muted-foreground max-w-md mx-auto">
+                          Load a video to see sign language translation here
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
+                
+                {/* Transcription Display */}
+                {transcription && (
+                  <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-md">
+                    <h3 className="text-md font-medium mb-2 flex items-center">
+                      <Volume2 className="h-4 w-4 mr-2 text-primary" />
+                      Transcription
+                    </h3>
+                    <p className="text-sm text-muted-foreground">{transcription}</p>
+                  </div>
+                )}
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
