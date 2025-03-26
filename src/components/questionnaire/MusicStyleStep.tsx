@@ -2,7 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { MusicStyle } from './types';
-import { Mic, Music, Sparkles, Violin, Piano, Guitar } from 'lucide-react';
+import { Mic, Music, Sparkles, Piano, Guitar } from 'lucide-react';
 
 interface MusicStyleStepProps {
   selectedStyle: MusicStyle | null;
