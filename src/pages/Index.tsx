@@ -7,7 +7,7 @@ import Questionnaire from '@/components/Questionnaire';
 import MusicPreview from '@/components/MusicPreview';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import { Languages } from 'lucide-react';
+import { Languages, Music } from 'lucide-react';
 
 const Index: React.FC = () => {
   useEffect(() => {
@@ -35,11 +35,18 @@ const Index: React.FC = () => {
 
   return (
     <Layout>
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4">
         <Link to="/translator">
           <Button className="rounded-full shadow-lg flex items-center" size="lg">
             <Languages className="mr-2 h-5 w-5" />
             Sign Language Translator
+          </Button>
+        </Link>
+        
+        <Link to="/song-creation">
+          <Button className="rounded-full shadow-lg flex items-center bg-gradient-to-r from-teal-500 to-purple-600 hover:from-teal-600 hover:to-purple-700" size="lg">
+            <Music className="mr-2 h-5 w-5" />
+            Create Custom Songs
           </Button>
         </Link>
       </div>
